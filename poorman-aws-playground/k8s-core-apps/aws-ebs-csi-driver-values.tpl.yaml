@@ -1,0 +1,30 @@
+controller:
+  k8sTagClusterId: ${cluster_id}
+  replicaCount: 1
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: ${role_arn}
+  extraVolumeTags:
+    Description: "Provisioned with EKS EBS CSI Driver"
+  nodeSelector:
+    role: core
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+node:
+  tolerateAllTaints: true
+storageClasses:
+  - name: gp3
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"
+    parameters:
+      type: gp3
+    allowVolumeExpansion: true
+  - name: gp3-retain
+    annotations:
+    parameters:
+      type: gp3
+    allowVolumeExpansion: true
+    reclaimPolicy: Retain

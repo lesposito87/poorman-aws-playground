@@ -1,0 +1,5 @@
+---
+roles:
+  - name: lesposito87.ansible-role-openvpn
+    src: https://github.com/lesposito87/ansible-role-openvpn.git
+    version: main

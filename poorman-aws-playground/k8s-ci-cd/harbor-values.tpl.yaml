@@ -1,0 +1,101 @@
+expose:
+  type: ingress
+  tls:
+    enabled: false  
+  ingress:
+    hosts:
+      core: harbor.${domain}
+    className: "nginx"
+externalURL: http://harbor.${domain}:${k8s_nginx_http_host_port}
+trivy:
+  enabled: false
+  image:
+    repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
+    tag: v2.13.0
+portal:
+  image:
+    repository: ghcr.io/octohelm/harbor/harbor-portal
+    tag: v2.13.0
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+core:
+  image:
+    repository: ghcr.io/octohelm/harbor/harbor-core
+    tag: v2.13.0
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+jobservice:
+  image:
+    repository: ghcr.io/octohelm/harbor/harbor-jobservice
+    tag: v2.13.0
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+registry:
+  registry:
+    image:
+      repository: ghcr.io/octohelm/harbor/registry-photon
+      tag: v2.13.0
+  controller:
+    image:
+      repository: ghcr.io/octohelm/harbor/harbor-registryctl
+      tag: v2.13.0
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+database:
+  type: internal
+  internal:
+    image:
+      repository: ghcr.io/octohelm/harbor/harbor-db
+      tag: v2.13.0
+    tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "core"
+        effect: "NoSchedule"
+      - key: karpenter
+        operator: Equal
+        value: schedule
+        effect: NoSchedule
+redis:
+  type: internal
+  internal:
+    image:
+      repository: ghcr.io/octohelm/harbor/redis-photon
+      tag: v2.13.0
+    tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "core"
+        effect: "NoSchedule"
+      - key: karpenter
+        operator: Equal
+        value: schedule
+        effect: NoSchedule

@@ -1,0 +1,7 @@
+**/.DS_Store
+**/.terragrunt*
+**/.terraform*
+**/tg-*.tf
+**/values.auto.pkrvars.hcl
+**/.docsible
+**/README_backup_*

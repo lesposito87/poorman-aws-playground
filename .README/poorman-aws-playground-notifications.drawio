@@ -1,0 +1,114 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram id="AWSInfra" name="AWS Infrastructure">
+    <mxGraphModel dx="1393" dy="2202" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eGuZC4ja0AfQrncxVi0a-1" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=default;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;labelBackgroundColor=none;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;textShadow=0;" parent="1" vertex="1">
+          <mxGeometry x="520" y="-480" width="1140" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="eGuZC4ja0AfQrncxVi0a-499" value="&lt;b&gt;Poorman AWS Playground Management Account&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="eGuZC4ja0AfQrncxVi0a-1" vertex="1">
+          <mxGeometry x="30" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-1" value="S3" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="237" y="271.75" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" target="UieCsGnfhLRjxQLo1toS-66">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="99.99999999999955" y="201.25" as="sourcePoint" />
+            <mxPoint x="232" y="143.0290697674418" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-5" value="Cloudwatch Log Group" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_logs;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="442" y="98.25" width="77.32" height="57.5" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-7" value="Cloudwatch Metric Filter" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_metrics_insights;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="622" y="89.36999999999999" width="76.25" height="77.25" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-9" value="Cloudwatch Metric Alarm" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.alarm;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="802" y="88.25" width="77.5" height="77.5" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-65" value="Cloudtrail" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudtrail;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="20" y="181" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-4" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" target="UieCsGnfhLRjxQLo1toS-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="99.99999999999955" y="240.25" as="sourcePoint" />
+            <mxPoint x="232" y="181.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-66" value="Cloudwatch" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="241" y="89" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-67" value="SNS" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;" vertex="1" parent="eGuZC4ja0AfQrncxVi0a-1">
+          <mxGeometry x="982" y="89.37" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-69" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" source="UieCsGnfhLRjxQLo1toS-66" target="UieCsGnfhLRjxQLo1toS-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="110" y="211.75" as="sourcePoint" />
+            <mxPoint x="251" y="137.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-70" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" source="UieCsGnfhLRjxQLo1toS-5" target="UieCsGnfhLRjxQLo1toS-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="519.3199999999999" y="127.32999999999998" as="sourcePoint" />
+            <mxPoint x="642.3199999999999" y="126.32999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-73" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" source="UieCsGnfhLRjxQLo1toS-7" target="UieCsGnfhLRjxQLo1toS-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="529" y="136.75" as="sourcePoint" />
+            <mxPoint x="666" y="137.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-74" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="eGuZC4ja0AfQrncxVi0a-1" source="UieCsGnfhLRjxQLo1toS-9" target="UieCsGnfhLRjxQLo1toS-67">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="742" y="137.75" as="sourcePoint" />
+            <mxPoint x="862" y="137.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eGuZC4ja0AfQrncxVi0a-528" value="User" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;labelBackgroundColor=none;" parent="1" vertex="1">
+          <mxGeometry x="1740" y="-289" width="58" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EAEDED;fontSize=22;fontColor=#FFFFFF;strokeColor=none;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="524" width="1136" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-29" value="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#007CBD;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=22;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="537.5" y="20" width="40" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-30" value="2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#007CBD;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=22;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="537.5" y="126" width="40" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-31" value="3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#007CBD;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=22;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1061" y="20" width="40" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-32" value="4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#007CBD;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=22;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1061" y="126" width="40" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-37" value="A &lt;strong data-end=&quot;22&quot; data-start=&quot;2&quot;&gt;CloudTrail Trail&lt;/strong&gt; is configured to &lt;strong data-end=&quot;91&quot; data-start=&quot;40&quot;&gt;filter and capture write-only management events&lt;/strong&gt;, storing them in an &lt;strong data-end=&quot;125&quot; data-start=&quot;112&quot;&gt;S3 bucket&lt;/strong&gt; and forwarding them to a &lt;strong data-end=&quot;175&quot; data-start=&quot;151&quot;&gt;CloudWatch log group&lt;/strong&gt;. To optimize costs, &lt;strong data-end=&quot;234&quot; data-start=&quot;196&quot;&gt;S3 objects are retained for 7 days&lt;/strong&gt;, while &lt;strong data-end=&quot;284&quot; data-start=&quot;242&quot;&gt;CloudWatch logs are retained for 1 day&lt;/strong&gt;." style="text;html=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=14;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="588.5" y="20" width="431.5" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-75" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="UieCsGnfhLRjxQLo1toS-67" target="eGuZC4ja0AfQrncxVi0a-528">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1070" y="10" as="sourcePoint" />
+            <mxPoint x="1170" y="10" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-76" value="" style="shape=message;html=1;outlineConnect=0;" vertex="1" parent="UieCsGnfhLRjxQLo1toS-75">
+          <mxGeometry width="20" height="14" relative="1" as="geometry">
+            <mxPoint x="-10" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-80" value="A &lt;b&gt;Cloudwatch Metric Filter&lt;/b&gt; searches for management write events in the CloudWatch log group using a pattern to exclude events from &lt;code data-end=&quot;313&quot; data-start=&quot;293&quot;&gt;logs.amazonaws.com&lt;/code&gt; and &lt;code data-end=&quot;344&quot; data-start=&quot;318&quot;&gt;cloudtrail.amazonaws.com&lt;/code&gt;. to avoid false positives. When a matching event is found, it transforms it into a &lt;b&gt;custom metric&lt;/b&gt; (&lt;code data-end=&quot;449&quot; data-start=&quot;417&quot;&gt;LogManagementWriteEventsMetric&lt;/code&gt;) in the &lt;code data-end=&quot;493&quot; data-start=&quot;458&quot;&gt;LogManagementWriteEventsNamespace&lt;/code&gt; namespace, with a value of &lt;code data-end=&quot;524&quot; data-start=&quot;521&quot;&gt;1&lt;/code&gt; for each event." style="text;html=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=14;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="588.5" y="126" width="401.5" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-81" value="A &lt;b&gt;Cloudwatch Metric Alarm&lt;/b&gt; monitors the metric created by the log metric filter. It triggers if the metric value is greater than or equal to &lt;code data-end=&quot;739&quot; data-start=&quot;736&quot;&gt;1&lt;/code&gt; during a 1-minute evaluation period, meaning that at least one matching management write event has occurred. When the alarm is triggered, it &lt;b&gt;sends a notification to a dedicated SNS topic&lt;/b&gt;." style="text;html=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=14;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1120.75" y="20" width="431.5" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UieCsGnfhLRjxQLo1toS-82" value="An &lt;b&gt;SNS Topic Subscription&lt;/b&gt; subscribes an email address to the SNS topic. When the CloudWatch alarm triggers, the &lt;b&gt;email address&lt;/b&gt; specified&amp;nbsp;&lt;b&gt;will receive a&amp;nbsp;notification&lt;/b&gt;, alerting the user about the management write event." style="text;html=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=14;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1120.75" y="126" width="429.25" height="84" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

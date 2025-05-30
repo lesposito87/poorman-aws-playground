@@ -1,0 +1,5 @@
+---
+roles:
+  - name: lesposito87.ansible-role-k3s
+    src: https://github.com/lesposito87/ansible-role-k3s.git
+    version: main

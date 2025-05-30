@@ -1,0 +1,10 @@
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: ${keda_operator_role_arn}
+nodeSelector:
+  role: core
+tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "core"
+    effect: "NoSchedule"

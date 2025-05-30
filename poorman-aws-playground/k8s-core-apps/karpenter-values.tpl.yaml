@@ -1,0 +1,16 @@
+serviceAccount:
+  create: true
+  annotations:
+    "eks.amazonaws.com/role-arn": "${iam_role_arn}"
+replicas: 1
+nodeSelector:
+  role: core
+tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "core"
+    effect: "NoSchedule"
+settings:
+  clusterName: "${cluster_name}"
+  featureGates:
+    spotToSpotConsolidation: true

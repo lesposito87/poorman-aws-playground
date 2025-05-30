@@ -1,0 +1,7 @@
+- hosts: all
+  become: true
+  gather_facts: True
+
+  tasks:
+    - include_role:
+        name: lesposito87.ansible-role-k3s

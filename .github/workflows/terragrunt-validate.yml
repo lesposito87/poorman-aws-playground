@@ -1,0 +1,116 @@
+name: Terragrunt Validate
+
+on:
+  pull_request:
+    paths:
+      - "poorman-aws-playground/**"
+      - "root.hcl.init"
+
+jobs:
+  terragrunt-networking:
+    name: Validate networking
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/networking
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate
+
+  terragrunt-core-infra:
+    name: Validate core-infra
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/core-infra
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate
+
+  terragrunt-k8s-core-apps:
+    name: Validate k8s-core-apps
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/k8s-core-apps
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate
+
+  terragrunt-k8s-ci-cd:
+    name: Validate k8s-ci-cd
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/k8s-ci-cd
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate
+
+  terragrunt-k8s-monitoring:
+    name: Validate k8s-monitoring
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/k8s-monitoring
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate
+
+  terragrunt-organizations:
+    name: Validate organizations
+    runs-on: ubuntu-latest
+    container:
+      image: lesposito87/poorman-aws-playground:latest
+      options: --user root
+    defaults:
+      run:
+        working-directory: poorman-aws-playground/organizations
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy root.hcl
+        run: cp ../../root.hcl.init ../../root.hcl
+      - name: Terragrunt Init
+        run: terragrunt init --backend=false
+      - name: Terragrunt Validate
+        run: terragrunt validate

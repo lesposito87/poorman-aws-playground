@@ -1,0 +1,530 @@
+## The global properties are used to configure multiple charts at once.
+## https://docs.gitlab.com/charts/charts/globals
+global:
+  ## https://docs.gitlab.com/charts/installation/deployment#deploy-the-community-edition
+  edition: ce
+
+  ## https://docs.gitlab.com/charts/charts/globals#application-resource
+  application:
+    create: false
+    links: []
+    allowClusterRoles: true
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-host-settings
+  hosts:
+    domain: ${domain}
+    hostSuffix:
+    https: true
+    gitlab:
+      name: ${gitlab_name}
+    externalIP:
+    ssh: ${gitlab_name}
+    minio: {}
+    registry: {}
+    tls: {}
+    smartcard: {}
+    kas: {}
+    pages: {}
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-ingress-settings
+  ingress:
+    apiVersion: ""
+    configureCertmanager: false
+    useNewIngressForCerts: false
+    provider: nginx
+    class: nginx
+    annotations: {}
+    enabled: true
+    tls:
+      enabled: false
+      secretName:
+    path: /
+    pathType: Prefix
+
+  # Override the API version to use for HorizontalPodAutoscaler
+  hpa:
+    apiVersion: ""
+
+  # Enable KEDA globally (https://keda.sh/)
+  keda:
+    enabled: false
+
+  # Override the API version to use for PodDisruptionBudget
+  pdb:
+    apiVersion: ""
+
+  # Override the API version to use for CronJob
+  batch:
+    cronJob:
+      apiVersion: ""
+
+  # Override enablement of ServiceMonitor and PodMonitor objects.
+  monitoring:
+    enabled: false
+
+  gitlab:
+    ## Enterprise license for this GitLab installation
+    ## Secret created according to https://docs.gitlab.com/charts/installation/secrets#initial-enterprise-license
+    ## If allowing shared-secrets generation, this is OPTIONAL.
+    license: {}
+      # secret: RELEASE-gitlab-license
+      # key: license
+
+  ## Initial root password for this GitLab installation
+  ## Secret created according to https://docs.gitlab.com/charts/installation/secrets#initial-root-password
+  ## If allowing shared-secrets generation, this is OPTIONAL.
+  initialRootPassword: {}
+    # secret: RELEASE-gitlab-initial-root-password
+    # key: password
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-postgresql-settings
+  psql:
+    connectTimeout:
+    keepalives:
+    keepalivesIdle:
+    keepalivesInterval:
+    keepalivesCount:
+    tcpUserTimeout:
+    password: {}
+      # useSecret:
+      # secret:
+      # key:
+      # file:
+    # host: postgresql.hostedsomewhere.else
+    # port: 123
+    # username: gitlab
+    # database: gitlabhq_production
+    # applicationName:
+    # preparedStatements: false
+    # databaseTasks: true
+    main: {}
+      # host: postgresql.hostedsomewhere.else
+      # port: 123
+      # username: gitlab
+      # database: gitlabhq_production
+      # applicationName:
+      # preparedStatements: false
+      # databaseTasks: true
+    ci: {}
+      # host: postgresql.hostedsomewhere.else
+      # port: 123
+      # username: gitlab
+      # database: gitlabhq_production_ci
+      # applicationName:
+      # preparedStatements: false
+      # databaseTasks: false
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-redis-settings
+  redis:
+    auth:
+      enabled: true
+      # secret:
+      # key:
+    # connectTimeout: 1
+    # readTimeout: 1
+    # writeTimeout: 1
+    # host: redis.hostedsomewhere.else
+    # port: 6379
+    # database: 0
+    # user: webservice
+    # sentinels:
+    #   - host:
+    #     port:
+    sentinelAuth:
+      enabled: false
+      # secret:
+      # key:
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-gitaly-settings
+  gitaly:
+    enabled: true
+    authToken: {}
+      # secret:
+      # key:
+    # serviceName:
+    internal:
+      names: [default]
+    external: []
+    service:
+      name: gitaly
+      type: ClusterIP
+      externalPort: 8075
+      internalPort: 8075
+      tls:
+        externalPort: 8076
+        internalPort: 8076
+    tls:
+      enabled: false
+      # secretName:
+
+  praefect:
+    enabled: false
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-minio-settings
+  minio:
+    enabled: false
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-appconfig-settings
+  ## Rails based portions of this chart share many settings
+  appConfig:
+
+    ## https://docs.gitlab.com/charts/charts/globals#cron-jobs-related-settings
+    cron_jobs: {}
+
+    ## https://docs.gitlab.com/charts/charts/globals#content-security-policy
+    contentSecurityPolicy:
+      enabled: false
+      report_only: true
+      # directives: {}
+
+    ## https://docs.gitlab.com/charts/charts/globals#gravatarlibravatar-settings
+    gravatar:
+      plainUrl:
+      sslUrl:
+
+    ## https://docs.gitlab.com/charts/charts/globals#hooking-analytics-services-to-the-gitlab-instance
+    extra:
+      googleAnalyticsId:
+      matomoUrl:
+      matomoSiteId:
+      matomoDisableCookies:
+      oneTrustId:
+      googleTagManagerNonceId:
+      bizible:
+
+    ## https://docs.gitlab.com/charts/charts/globals#lfs-artifacts-uploads-packages-external-mr-diffs-and-dependency-proxy
+    object_store:
+      enabled: false
+    lfs:
+      enabled: false
+    artifacts:
+      enabled: false
+    uploads:
+      enabled: false
+    packages:
+      enabled: false
+    externalDiffs:
+      enabled: false
+      when:
+      proxy_download: true
+      bucket: gitlab-mr-diffs
+      connection: {}
+    terraformState:
+      enabled: false
+      bucket: gitlab-terraform-state
+      connection: {}
+    ciSecureFiles:
+      enabled: false
+      bucket: gitlab-ci-secure-files
+      connection: {}
+    dependencyProxy:
+      enabled: false
+      proxy_download: true
+      bucket: gitlab-dependency-proxy
+      connection: {}
+
+    backups:
+      bucket: gitlab-backups
+      tmpBucket: tmp
+
+    ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
+    ## Microsoft Graph Mailer settings
+    microsoft_graph_mailer:
+      enabled: false
+      
+    ## https://docs.gitlab.com/charts/installation/command-line-options.html#incoming-email-configuration
+    ## https://docs.gitlab.com/charts/charts/gitlab/mailroom/index.html#incoming-email
+    incomingEmail:
+      enabled: false
+
+    ## https://docs.gitlab.com/charts/charts/gitlab/mailroom/index.html#service-desk-email
+    serviceDeskEmail:
+      enabled: false
+
+    duoAuth:
+      enabled: false
+
+    ## Configure GitLab Cells. Cells is a GitLab internal-use experiment.
+    ## https://docs.gitlab.com/administration/cells/
+    cell:
+      enabled: false
+
+    ## https://docs.gitlab.com/charts/charts/globals#omniauth
+    omniauth:
+      enabled: false
+
+    ## https://docs.gitlab.com/charts/charts/globals#kerberos
+    kerberos:
+      enabled: false
+
+    ## https://docs.gitlab.com/charts/charts/globals#configure-appconfig-settings
+    sentry:
+      enabled: false
+
+    gitlab_docs:
+      enabled: false
+
+  ## https://docs.gitlab.com/charts/advanced/geo/
+  geo:
+    enabled: false
+
+  ## https://docs.gitlab.com/charts/charts/gitlab/kas/
+  kas:
+    enabled: false
+
+  ## https://docs.gitlab.com/charts/charts/gitlab/spamcheck/
+  spamcheck:
+    enabled: false
+
+  ## https://docs.gitlab.com/charts/charts/globals#configure-gitlab-shell
+  shell:
+    authToken: {}
+    # secret:
+    # key:
+    hostKeys: {}
+      # secret:
+    ## https://docs.gitlab.com/charts/charts/globals#tcp-proxy-protocol
+    tcp:
+      proxyProtocol: false
+
+  ## Rails application secrets
+  ## Secret created according to https://docs.gitlab.com/charts/installation/secrets#gitlab-rails-secret
+  ## If allowing shared-secrets generation, this is OPTIONAL.
+  railsSecrets: {}
+    # secret:
+
+  ## Rails generic setting, applicable to all Rails-based containers
+  rails:
+    bootsnap: # Enable / disable Shopify/Bootsnap cache
+      enabled: true
+    sessionStore:
+      sessionCookieTokenPrefix: ""
+
+  pages:
+    enabled: false
+
+  ## GitLab Runner
+  ## Secret created according to https://docs.gitlab.com/charts/installation/secrets#gitlab-runner-secret
+  ## If allowing shared-secrets generation, this is OPTIONAL.
+  runner:
+    registrationToken: {}
+      # secret:
+
+  ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
+  ## Outgoing email server settings
+  smtp:
+    enabled: false
+
+## End of global
+
+upgradeCheck:
+  enabled: true
+  image: {}
+    # repository:
+    # tag:
+    # pullPolicy: IfNotPresent
+    # pullSecrets: []
+  securityContext:
+    # in alpine/debian/busybox based images, this is `nobody:nogroup`
+    runAsUser: 65534
+    fsGroup: 65534
+    seccompProfile:
+      type: "RuntimeDefault"
+  ## Allow to overwrite the specific security context under which the container is running.
+  containerSecurityContext:
+    runAsUser: 65534
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    capabilities:
+      drop: [ "ALL" ]
+  tolerations: []
+  annotations: {}
+  configMapAnnotations: {}
+  resources:
+    requests:
+      cpu: 50m
+  priorityClassName: ""
+
+## Installation & configuration of jetstack/cert-manager
+## See requirements.yaml for current version
+certmanager:
+  installCRDs: true
+  nameOverride: certmanager
+  # Install cert-manager chart. Set to false if you already have cert-manager
+  # installed or if you are not using cert-manager.
+  install: false
+  # Other cert-manager configurations from upstream
+  # See https://github.com/jetstack/cert-manager/blob/master/deploy/charts/cert-manager/README#configuration
+  rbac:
+    create: true
+
+## https://docs.gitlab.com/charts/charts/nginx/
+## https://docs.gitlab.com/charts/architecture/decisions#nginx-ingress
+## Installation & configuration of charts/ingress-nginx:
+nginx-ingress: &nginx-ingress
+  enabled: false
+
+# Ingress controller to handle requests forwarded from other Geo sites.
+# Configuration differences compared to the main nginx ingress:
+#   - Pass X-Forwarded-For headers as is
+#   - Use a different IngressClass name
+nginx-ingress-geo:
+  <<: *nginx-ingress
+  enabled: false
+
+haproxy:
+  install: false
+
+## Installation & configuration of stable/prometheus
+## See requirements.yaml for current version
+prometheus:
+  install: false
+
+## Configuration of Redis
+## https://docs.gitlab.com/charts/architecture/decisions#redis
+## https://docs.gitlab.com/charts/installation/deployment.html#redis
+redis:
+  install: true
+  auth:
+    existingSecret: gitlab-redis-secret
+    existingSecretKey: redis-password
+    usePasswordFiles: true
+  architecture: standalone
+  cluster:
+    enabled: false
+  metrics:
+    enabled: true
+  master:
+    persistence:
+      size: 4Gi
+
+## Installation & configuration of stable/postgresql
+## See requirements.yaml for current version
+postgresql:
+  install: true
+  auth:
+    ## These need to be set, for the sake of bitnami/postgresql upgrade patterns.
+    ## They are overridden by use of `existingSecret`
+    password: bogus-satisfy-upgrade
+    postgresPassword: bogus-satisfy-upgrade
+    ##
+    usePasswordFiles: false
+    existingSecret: '{{ include "gitlab.psql.password.secret" . }}'
+    secretKeys:
+      adminPasswordKey: postgresql-postgres-password
+      userPasswordKey: '{{ include "gitlab.psql.password.key" $ }}'
+  primary:
+    initdb:
+      scriptsConfigMap: '{{ include "gitlab.psql.initdbscripts" $}}'
+    extraVolumeMounts:
+      - name: custom-init-scripts
+        mountPath: /docker-entrypoint-preinitdb.d/init_revision.sh
+        subPath: init_revision.sh
+    podAnnotations:
+      postgresql.gitlab/init-revision: "1"
+    persistence:
+      size: 4Gi
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9187"
+        gitlab.com/prometheus_scrape: "true"
+        gitlab.com/prometheus_port: "9187"
+
+    ## Optionally define additional custom metrics
+    ## ref: https://github.com/wrouesnel/postgres_exporter#adding-new-metrics-via-a-config-file
+
+## Installation & configuration charts/registry
+## https://docs.gitlab.com/charts/architecture/decisions#registry
+## https://docs.gitlab.com/charts/charts/registry/
+registry:
+  enabled: false
+
+## Automatic shared secret generation
+## https://docs.gitlab.com/charts/installation/secrets
+## https://docs.gitlab.com/charts/charts/shared-secrets.html
+shared-secrets:
+  enabled: true
+  rbac:
+    create: true
+  selfsign:
+    image:
+      # pullPolicy: IfNotPresent
+      # pullSecrets: []
+      repository: registry.gitlab.com/gitlab-org/build/cng/cfssl-self-sign
+      # Default tag is `master`, overridable by `global.gitlabVersion`.
+      # tag: master
+    keyAlgorithm: "rsa"
+    keySize: "4096"
+    expiry: "3650d"
+    caSubject: "GitLab Helm Chart"
+  env: production
+  serviceAccount:
+    enabled: true
+    create: true
+    name: # Specify a pre-existing ServiceAccount name
+  resources:
+    requests:
+      cpu: 50m
+  securityContext:
+    # in debian/alpine based images, this is `nobody:nogroup`
+    runAsUser: 65534
+    fsGroup: 65534
+    seccompProfile:
+      type: "RuntimeDefault"
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    capabilities:
+      drop: [ "ALL" ]
+  tolerations: []
+  podLabels: {}
+  annotations: {}
+
+gitlab-runner:
+  install: false
+
+traefik:
+  install: false
+  ports:
+    gitlab-shell:
+      expose: true
+      port: 2222
+      exposedPort: 22
+
+## Settings for individual sub-charts under GitLab
+## Note: Many of these settings are configurable via globals
+gitlab:
+  ## https://docs.gitlab.com/charts/charts/gitlab/toolbox
+  toolbox:
+    enabled: false
+  gitlab-exporter:
+    enabled: false
+  gitaly:
+    persistence:
+      size: 20Gi
+  webservice:
+    minReplicas: 1
+    maxReplicas: 1
+    resources:
+      requests:
+        cpu: 200m
+        memory: 1500Mi
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 1
+  sidekiq:
+    enabled: true
+    registry:
+      enabled: false
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1500Mi
+
+## Installation & configuration of gitlab/gitlab-zoekt
+gitlab-zoekt:
+  install: false
+

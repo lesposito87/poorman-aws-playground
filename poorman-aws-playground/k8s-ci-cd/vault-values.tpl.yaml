@@ -1,0 +1,97 @@
+#https://github.com/hashicorp/vault-helm/blob/main/values.yaml
+# Available parameters and their default values for the Vault chart.
+global:
+  # enabled is the master enabled switch. Setting this to true or false
+  # will enable or disable all the components within this chart by default.
+  enabled: true
+  # Image pull secret to use for registry authentication.
+  imagePullSecrets: []
+  # imagePullSecrets:
+  #   - name: image-pull-secret
+  # TLS for end-to-end encrypted transport
+  tlsDisable: true
+
+injector:
+  enabled: true
+  # Mount Path of the Vault Kubernetes Auth Method.
+  authPath: "auth/kubernetes"
+  logLevel: "debug"
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+
+server:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+
+  dataStorage:
+    # Size of the PVC created
+    size: 8Gi
+
+  # Ingress allows ingress services to be created to allow external access
+  # from Kubernetes to access Vault pods.
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    labels: {}
+    annotations: {}
+    hosts:
+      - host: "${vault_hostname}"
+        paths: []
+    tls: []
+
+  # authDelegator enables a cluster role binding to be attached to the service
+  # account.  This cluster role binding can be used to setup Kubernetes auth
+  # method.  https://www.vaultproject.io/docs/auth/kubernetes.html
+  # Manually managed in "vault-k8s-auth.tf" (resource "kubernetes_cluster_role_binding.vault_auth_token_review")
+  authDelegator:
+    enabled: false
+
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "core"
+      effect: "NoSchedule"
+    - key: karpenter
+      operator: Equal
+      value: schedule
+      effect: NoSchedule
+
+  standalone:
+    enabled: "-"
+    config: |-
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      storage "file" {
+        path = "/vault/data"
+      }
+
+      seal "awskms" {
+        region     = "${region}"
+        kms_key_id = "${kms_key_id}"
+      }
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: ${role_arn}
+
+ui:
+  enabled: true

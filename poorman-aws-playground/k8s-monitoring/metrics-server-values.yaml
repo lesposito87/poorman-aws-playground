@@ -1,0 +1,8 @@
+nodeSelector:
+  role: core
+tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "core"
+    effect: "NoSchedule"
+replicas: 1

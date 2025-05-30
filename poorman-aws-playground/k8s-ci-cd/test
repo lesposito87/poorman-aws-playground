@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-mirror
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-mirror
+  template:
+    metadata:
+      labels:
+        app: nginx-mirror
+    spec:
+      containers:
+      - name: nginx
+        image: harbor.lesposito87.intra:30080/docker-hub/library/nginx:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

@@ -1,0 +1,32 @@
+---
+replicas: 1
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - "${grafana_hostname}"
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+nodeSelector:
+  role: core
+tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "core"
+    effect: "NoSchedule"
+
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: "${storage_class}"
+  size: 4Gi
+
+adminUser: ${grafana_admin_user}

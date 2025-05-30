@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "rangeStrategy": "bump",
+  "regexManagers": [
+    {
+      "fileMatch": ["^root\\.hcl\\.init$"],
+      "matchStrings": [
+        "(?s)(?<depName>[\\w-]+/[\\w-]+).*?version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "terraform-provider",
+      "versioningTemplate": "hashicorp",
+      "currentValueTemplate": "{{ currentValue }}"
+    },
+    {
+      "fileMatch": ["(^|/)main\\.pkr\\.hcl$"],
+      "matchStrings": [
+        "(?s)(?<pluginName>\\w+)\\s*=\\s*\\{[^}]*?source\\s*=\\s*\"github\\.com/hashicorp/(?<depName>\\w+)\"[^}]*?version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "hashicorp/packer-plugin-{{depName}}",
+      "currentValueTemplate": "{{ currentValue }}"
+    }
+  ]
+}

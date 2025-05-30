@@ -1,0 +1,481 @@
+# Creating 'tg-provider_override.tf' to avoid error "Error: Duplicate required providers configuration" on vpc module #
+generate "provider" {
+  path      = "tg-provider_override.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
+terraform {
+  backend "s3" {
+    bucket                   = "__PLACEHOLDER_aws_s3_bucket__"
+    key                      = "${path_relative_to_include()}/terraform.tfstate"
+    region                   = "__PLACEHOLDER_aws_region__"
+    shared_config_files      = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+    shared_credentials_files = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  }
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.98.0"
+    }
+    http = {
+      source = "hashicorp/http"
+      version = "3.5.0"
+    }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "2.37.0"
+    }
+    kubectl = {
+      source = "gavinbunney/kubectl"
+      version = "1.19.0"
+    }
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.17.0"
+    }
+%{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
+    vault = {
+      source = "hashicorp/vault"
+      version = "4.8.0"
+    }
+    harbor = {
+      source  = "goharbor/harbor"
+      version = "3.10.21"
+    }
+%{ endif }
+%{ if basename(path_relative_to_include()) == "k8s-monitoring" }
+    grafana = {
+      source = "grafana/grafana"
+      version = "3.25.1"
+    }
+%{ endif }
+  }
+}
+
+provider "aws" {
+  region                   = "__PLACEHOLDER_aws_region__"
+  shared_config_files      = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  shared_credentials_files = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  default_tags {
+    tags = {
+      Terraform         = "true"
+      Terraform_Account = "__PLACEHOLDER_aws_account_name__"
+    }
+  }
+}
+
+%{ if basename(path_relative_to_include()) == "k8s-core-apps" || basename(path_relative_to_include()) == "k8s-monitoring" || basename(path_relative_to_include()) == "k8s-ci-cd" }
+provider "kubernetes" {
+  config_path = "/home/poorman/.kube/config"
+  token       = var.eks_deploy ? data.aws_eks_cluster_auth.cluster[0].token : null
+}
+
+provider "kubectl" {
+  load_config_file = true
+  config_path      = "/home/poorman/.kube/config"
+  token            = var.eks_deploy ? data.aws_eks_cluster_auth.cluster[0].token : null
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "/home/poorman/.kube/config"
+    token       = var.eks_deploy ? data.aws_eks_cluster_auth.cluster[0].token : null
+  }
+}
+%{ endif }
+
+%{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
+provider "vault" {
+  address         = "https://$${aws_route53_record.vault.fqdn}:$${var.k8s_nginx_https_host_port}"
+  skip_tls_verify = true
+  auth_login_token_file {
+    filename = "$${var.vault_root_token}"
+  }
+}
+
+provider "harbor" {
+  url      = "https://harbor.$${var.route53_private_zone}:$${var.k8s_nginx_https_host_port}"
+  username = "admin"
+  password = "$${var.harbor_admin_pwd}"
+  insecure = true
+}
+%{ endif }
+
+%{ if basename(path_relative_to_include()) == "k8s-monitoring" }
+provider "grafana" {
+  url                  = "https://$${aws_route53_record.grafana.fqdn}:$${var.k8s_nginx_https_host_port}"
+  auth                 = "admin:$${var.grafana_admin_pwd}"
+  insecure_skip_verify = true
+}
+%{ endif }
+EOF
+}
+
+generate "global_vars" {
+  path      = "tg-global-variables.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
+variable "aws_shared_credentials_file" {
+  type    = string
+  default = "__PLACEHOLDER_aws_shared_credentials_files__"
+}
+
+variable "vault_root_token" {
+  type    = string
+  default = "/home/poorman/.vault/vault-root-token"
+}
+
+variable "account_name" {
+  type    = string
+  default = "__PLACEHOLDER_aws_account_name__"
+}
+
+variable "org_s3_bucket" {
+  type    = string
+  default = "__PLACEHOLDER_aws_s3_bucket__"
+}
+
+variable "org_feature_set" {
+  type    = string
+  default = "ALL"
+}
+
+variable "org_enabled_policy_types" {
+  type    = list(any)
+  default = ["SERVICE_CONTROL_POLICY"]
+}
+
+variable "org_account_alias" {
+  type    = string
+  default = "__PLACEHOLDER_aws_account_name__"
+}
+
+variable "org_scp_target_id" {
+  type    = string
+  default = "r-patz"
+}
+
+variable "org_aws_service_access_principals" {
+  type    = list(string)
+  default = ["cloudtrail.amazonaws.com"]
+}
+
+variable "org_budget_limit_amount" {
+  type    = string
+  default = "20"
+}
+
+variable "org_budget_limit_unit" {
+  type    = string
+  default = "USD"
+}
+
+variable "org_budget_subscriber_email_addresses" {
+  type    = list(string)
+  default = ["__PLACEHOLDER_aws_email_address__"]
+}
+
+variable "org_cloudwatch_alerts_email_addresses" {
+  type    = string
+  default = "__PLACEHOLDER_aws_email_address__"
+}
+
+variable "org_cloudtrail_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "region" {
+  type    = string
+  default = "__PLACEHOLDER_aws_region__"
+}
+
+variable "vpc_name" {
+  type    = string
+  default = "__PLACEHOLDER_aws_account_name__"
+}
+
+variable "vpc_cidr" {
+  type    = string
+  default = "172.16.0.0/16"
+}
+
+variable "vpc_azs" {
+  type    = list(string)
+  default = ["__PLACEHOLDER_aws_region__a", "__PLACEHOLDER_aws_region__b", "__PLACEHOLDER_aws_region__c"]
+}
+
+variable "vpc_public_subnets_cidr" {
+  type    = list(string)
+  default = ["172.16.1.0/24", "172.16.2.0/24", "172.16.3.0/24"]
+}
+
+variable "vpc_private_subnets_cidr" {
+  type    = list(string)
+  default = ["172.16.16.0/20", "172.16.32.0/20", "172.16.48.0/20"]
+}
+
+variable "vpc_primary_az" {
+  type    = string
+  default = "aza"
+}
+
+variable "aws_key_pair_private" {
+  type    = string
+  default = "__PLACEHOLDER_aws_key_pair_private__"
+}
+
+variable "aws_key_pair_public" {
+  type    = string
+  default = "__PLACEHOLDER_aws_key_pair_public__"
+}
+
+variable "route53_private_zone" {
+  type    = string
+  default = "__PLACEHOLDER_aws_route53_private_zone__"
+}
+
+variable "packer_build_ami" {
+  type        = bool
+  default     = false
+  description = "force rebuild of fck-nat ami"
+}
+
+variable "ec2_fck_nat_instance_type" {
+  type    = string
+  default = "t4g.nano"
+}
+
+variable "fck_nat_ssh_custom_port" {
+  type    = string
+  default = "30877"
+}
+
+variable "ansible_openvpn_client_dir" {
+  type    = string
+  default = "__PLACEHOLDER_openvpn_client_dir__"
+}
+
+variable "ec2_k3s_instance_type" {
+  type    = string
+  default = "t4g.medium"
+}
+
+variable "eks_deploy" {
+  type    = bool
+  default = false
+}
+
+variable "eks_cluster_name" {
+  type    = string
+  default = "__PLACEHOLDER_aws_account_name__-eks"
+}
+
+variable "eks_core_instance_type" {
+  type    = list(string)
+  default = ["t4g.medium"]
+}
+
+variable "k8s_nginx_http_host_port" {
+  type    = string
+  default = "30080"
+}
+
+variable "k8s_nginx_https_host_port" {
+  type    = string
+  default = "30443"
+}
+
+variable "kubeconfig_local_file" {
+  type    = string
+  default = "/home/poorman/.kube/config"
+}
+
+%{ if basename(path_relative_to_include()) == "k8s-monitoring" }
+variable "grafana_admin_pwd" {
+  type    = string
+  default = "admin123"
+}
+%{ endif }
+
+%{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
+variable "harbor_admin_pwd" {
+  type    = string
+  default = "admin123"
+}
+%{ endif }
+EOF
+}
+
+generate "global_data" {
+  path      = "tg-global-data.tf"
+  if_exists = "overwrite"
+  # On "organizations" stage, vpc is not yet created and so TF data resources will fail.
+  # For this reason we won't populate this file.
+
+  # On "networking" stage, data resource must be evaluated after the vpc creation.
+  # That's why we're adding a dependency to the "vpc" module.
+  # This dependency is not required on all the other next stages (vpc will be already created).
+
+  contents = <<EOF
+%{ if basename(path_relative_to_include()) != "organizations" }
+  
+%{ if basename(path_relative_to_include()) == "networking" }
+data "aws_vpcs" "vpc" {
+  tags = {
+    Name = var.vpc_name
+  }
+  depends_on = [module.vpc]
+}
+%{ else }
+data "aws_vpcs" "vpc" {
+  tags = {
+    Name = var.vpc_name
+  }
+}
+%{ endif }
+
+data "aws_subnets" "private_subnets_aza" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*private-$${var.region}a"
+  }
+}
+
+data "aws_subnets" "private_subnets_azb" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*private-$${var.region}b"
+  }
+}
+
+data "aws_subnets" "private_subnets_azc" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*private-$${var.region}c"
+  }
+}
+
+data "aws_subnets" "public_subnets_aza" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*public-$${var.region}a"
+  }
+}
+
+data "aws_subnets" "public_subnets_azb" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*public-$${var.region}b"
+  }
+}
+
+data "aws_subnets" "public_subnets_azc" {
+  filter {
+    name   = "vpc-id"
+    values = data.aws_vpcs.vpc.ids
+  }
+  tags = {
+    Name = "*public-$${var.region}c"
+  }
+}
+
+data "aws_route_tables" "rtb_aza" {
+  vpc_id = data.aws_vpcs.vpc.ids[0]
+  filter {
+    name   = "tag:Name"
+    values = ["*private-$${var.region}a"]
+  }
+}
+
+data "aws_route_tables" "rtb_azb" {
+  vpc_id = data.aws_vpcs.vpc.ids[0]
+  filter {
+    name   = "tag:Name"
+    values = ["*private-$${var.region}b"]
+  }
+}
+
+data "aws_route_tables" "rtb_azc" {
+  vpc_id = data.aws_vpcs.vpc.ids[0]
+  filter {
+    name   = "tag:Name"
+    values = ["*private-$${var.region}c"]
+  }
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
+data "aws_region" "current" {}
+
+%{ if basename(path_relative_to_include()) == "core-infra" }
+data "terraform_remote_state" "networking" {
+  backend = "s3"
+  config = {
+    bucket = var.org_s3_bucket
+    key    = "$${var.account_name}/networking/terraform.tfstate"
+    region = var.region
+    shared_config_files      = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+    shared_credentials_files = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  }
+}
+%{ endif }
+
+%{ if basename(path_relative_to_include()) == "k8s-core-apps" || basename(path_relative_to_include()) == "k8s-monitoring" || basename(path_relative_to_include()) == "k8s-ci-cd" }
+data "terraform_remote_state" "core_infra" {
+  backend = "s3"
+  config = {
+    bucket = var.org_s3_bucket
+    key    = "$${var.account_name}/core-infra/terraform.tfstate"
+    region = var.region
+    shared_config_files      = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+    shared_credentials_files = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  }
+}
+
+data "aws_route53_zone" "route53_private_zone" {
+  name         = var.route53_private_zone
+  private_zone = true
+}
+
+data "aws_eks_cluster" "cluster" {
+  count = var.eks_deploy ? 1 : 0
+  name  = var.eks_cluster_name
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  count = var.eks_deploy ? 1 : 0
+  name  = var.eks_cluster_name
+}
+%{ endif }
+
+%{ if basename(path_relative_to_include()) == "k8s-monitoring" || basename(path_relative_to_include()) == "k8s-ci-cd" }
+data "terraform_remote_state" "k8s_core_apps" {
+  backend = "s3"
+  config = {
+    bucket = var.org_s3_bucket
+    key    = "$${var.account_name}/k8s-core-apps/terraform.tfstate"
+    region = var.region
+    shared_config_files      = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+    shared_credentials_files = ["__PLACEHOLDER_aws_shared_credentials_files__"]
+  }
+}
+%{ endif }
+
+%{ endif }
+EOF
+}
