@@ -171,7 +171,7 @@ A custom private AMI built with **Packer**, based on the latest `fck-nat-al2023-
 - Ensuring `PermitRootLogin` and `PasswordAuthentication` are disabled in SSH configuration
 - Adding a cronjob to dynamically retrieve the EKS kubeconfig for our EKS cluster
 
-ℹ️ After the initial deployment (which requires at least one instance of this AMI), the AMI will NOT be rebuilt on subsequent terragrunt apply runs; if you want to **force the AMI rebuild**, set the variable `packer_build_ami` to `true` (file `root.hcl` => automatically generated after executing the script `poorman-aws-playground-init.sh`).
+ℹ️ After the initial deployment (which requires at least one instance of this AMI), the AMI will NOT be rebuilt on subsequent terragrunt apply runs; if you want to **force the AMI rebuild**, set the variable `packer_build_ami` to `true` (file `root.hcl` ➜ automatically generated after executing the script `poorman-aws-playground-init.sh`).
 
 <br>
 
@@ -533,7 +533,7 @@ A **Route53 CNAME Record** `prometheus.<R53-PRIVATE-ZONE>` is automatically crea
 
 A single-replica Grafana Server with a **`4G` Persistent Volume** (values can be customized in the file [grafana-values.tpl.yaml](https://github.com/lesposito87/poorman-aws-playground/blob/main/poorman-aws-playground/k8s-monitoring/grafana-values.tpl.yaml)).
 
-**Grafana Admin Username & Password** can be customized in the variables `grafana_admin_user` & `grafana_admin_pwd` (file `root.hcl` => automatically generated after executing the script `poorman-aws-playground-init.sh`).
+**Grafana Admin Username & Password** can be customized in the variables `grafana_admin_user` & `grafana_admin_pwd` (file `root.hcl` ➜ automatically generated after executing the script `poorman-aws-playground-init.sh`).
 
 A **Route53 CNAME Record** `grafana.<R53-PRIVATE-ZONE>` is automatically created pointing to the NGINX Ingress Controller record `k8s-nginx-ingress-controller.<R53-PRIVATE-ZONE>`.
 
@@ -670,7 +670,7 @@ Here is an high-level diagram illustrating the Vault K8s Authentication (_The or
 
 As outlined in the [Official Website](https://goharbor.io/), _Harbor is an open source registry that secures artifacts with policies and role-based access control_.
 
-**Harbor Admin Password** can be customized in the variable `harbor_admin_pwd` (file `root.hcl` => automatically generated after executing the script `poorman-aws-playground-init.sh`).
+**Harbor Admin Password** can be customized in the variable `harbor_admin_pwd` (file `root.hcl` ➜ automatically generated after executing the script `poorman-aws-playground-init.sh`).
 
 A **Route53 CNAME Record** `harbor.<R53-PRIVATE-ZONE>` is automatically created pointing to the NGINX Ingress Controller record `k8s-nginx-ingress-controller.<R53-PRIVATE-ZONE>`.
 
