@@ -8,7 +8,7 @@ resource "helm_release" "nginx_ingress_chart" {
   name       = kubernetes_namespace.nginx_ingress_controller.metadata[0].name
   chart      = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
-  version    = "4.12.2"
+  version    = "4.12.3"
   namespace  = kubernetes_namespace.nginx_ingress_controller.metadata[0].name
   values = [templatefile("${path.module}/nginx-ingress-controller-values.tpl.yaml",
     {
