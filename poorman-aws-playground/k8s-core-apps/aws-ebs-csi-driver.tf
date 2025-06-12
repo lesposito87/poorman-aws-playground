@@ -5,7 +5,7 @@ data "http" "aws_ebs_csi_driver_iam_policy" {
 
 module "iam_eks_role_aws_ebs_csi_driver" {
   source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version   = "5.55.0"
+  version   = "5.58.0"
 
   count = var.eks_deploy ? 1 : 0
 
