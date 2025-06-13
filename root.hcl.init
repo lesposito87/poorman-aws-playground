@@ -293,14 +293,14 @@ variable "kubeconfig_local_file" {
 %{ if basename(path_relative_to_include()) == "k8s-monitoring" }
 variable "grafana_admin_pwd" {
   type    = string
-  default = "admin123"
+  default = "Pl3@seCh@ng3M3"
 }
 %{ endif }
 
 %{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
 variable "harbor_admin_pwd" {
   type    = string
-  default = "admin123"
+  default = "Pl3@seCh@ng3M3"
 }
 %{ endif }
 EOF
