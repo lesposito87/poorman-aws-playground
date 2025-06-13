@@ -83,7 +83,6 @@ resource "null_resource" "k3s_ansible_playbook" {
   triggers = {
     k3s_instance_arn = aws_instance.k3s[count.index].arn
     k3s_private_ip   = aws_instance.k3s[count.index].private_ip
-    sadf = "saddsf"
   }
 
   provisioner "local-exec" {
