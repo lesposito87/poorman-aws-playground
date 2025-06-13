@@ -236,8 +236,8 @@ variable "route53_private_zone" {
 
 variable "packer_build_ami" {
   type        = bool
-  default     = false
-  description = "force rebuild of fck-nat ami"
+  default     = true
+  description = "build fck-nat ami"
 }
 
 variable "ec2_fck_nat_instance_type" {

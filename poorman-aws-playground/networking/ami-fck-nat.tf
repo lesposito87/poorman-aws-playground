@@ -16,8 +16,6 @@ locals {
       route_table_id = data.aws_route_tables.rtb_azc.ids[0]
     }
   }
-  fck_nat_ami_exists = length(data.aws_ami_ids.fck_nat.ids) > 0
-  fck_nat_build_ami  = var.packer_build_ami || !local.fck_nat_ami_exists
 }
 
 data "aws_ami_ids" "fck_nat" {
@@ -45,7 +43,7 @@ resource "aws_key_pair" "key" {
 }
 
 resource "local_file" "ami_fck_nat_vars" {
-  count = local.fck_nat_build_ami ? 1 : 0
+  count = var.packer_build_ami ? 1 : 0
 
   filename = "${path.module}/packer/ec2-fck-nat/values.auto.pkrvars.hcl"
   content = <<-EOT
@@ -62,7 +60,7 @@ eks_cluster_name="${var.eks_cluster_name}"
 }
 
 resource "null_resource" "ami_fck_nat" {
-  count = local.fck_nat_build_ami ? 1 : 0
+  count = var.packer_build_ami ? 1 : 0
 
   triggers = {
     always_run = timestamp()
