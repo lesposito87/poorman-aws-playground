@@ -10,6 +10,7 @@
 - [Project Structure & Infrastructure Details](#projectstructure)
   - [`organizations`](#organizations)
   - [`networking`](#networking)
+    - [Overview](#networkingoverview)
     - [FCK-NAT AMI](#fcknatami)
   - [`core-infra`](#coreinfra)
     - [FCK-NAT EC2 Instance & OpenVPN Client files](#fcknatec2)
@@ -78,7 +79,9 @@ Here is an high-level diagram illustrating the AWS account configuration and the
 
 ## How to Run it? <a name="howtorunit"/>
 
-**1-** Clone this repository locally and run the `poorman-aws-playground-init.sh` script, providing all the required information.
+**1-** Clone this repository locally and run the `poorman-aws-playground-init.sh` script, providing all the required information. 
+
+This will generate a new `root.hcl` file and a directory named according to the value provided for the `Enter your AWS account name` option during the execution of the `poorman-aws-playground-init.sh` script (e.g. `myaccount-root`). The directory will contain all the code required to deploy your infrastructure.
 
 ⚠️ Ensure the **S3 bucket** you specify in the `Enter your AWS S3 bucket name` option is located in the **same region** as the one you enter in the `Enter your AWS region` option:
 
@@ -90,13 +93,11 @@ Here is an high-level diagram illustrating the AWS account configuration and the
 
 **3-** Execute the 3 `docker`/`podman` commands generated in the previous step to enter the `poorman-aws-playground` container.
 
-**4-** Navigate into each project folder and run the following commands to deploy the infrastructure:
-```
-➜  ~ terragrunt init
-➜  ~ terragrunt apply
-```
+**4-** Navigate into each project folder and run the `terragrunt apply` command to deploy the infrastructure.
 
 <br>
+
+ℹ️ All the variables used to deploy your infrastructure are centralized in the **`root.hcl`** file. If you need to customize any values, simply edit this file and re-run the `terragrunt apply` commands.
 
 ⚠️ **Deploy the components in the following order** to ensure dependency resolution:
 
@@ -105,6 +106,14 @@ Here is an high-level diagram illustrating the AWS account configuration and the
 3. `core-infra`
 4. `k8s-core-apps`
 5. `k8s-monitoring` & `k8s-ci-cd`
+
+<br>
+
+## Important Notes
+
+⚠️ In case you encounter the following error during the `organizations` stage, just re-run the `terragrunt apply` command:
+
+![AWS Playground Diagram](.README/poorman-aws-playground-cloudtrail-error.png)
 
 <br>
 
@@ -156,6 +165,8 @@ This folder contains code that sets up a complete monitoring and alerting pipeli
 
 ### `networking` <a name="networking"/>
 
+#### Overview <a name="networkingoverview"/>
+
 This folder contains code that provisions a **VPC** with **Public and Private subnets** (along with their associated **Route Tables**), sets up a **VPC S3 Gateway Endpoint** for private access to S3 without requiring an Internet or NAT Gateway, and creates a **Private Route 53 DNS zone**:
 
 ![AWS Playground Diagram](.README/poorman-aws-playground-networking.png)
@@ -171,7 +182,7 @@ A custom private AMI built with **Packer**, based on the latest `fck-nat-al2023-
 - Ensuring `PermitRootLogin` and `PasswordAuthentication` are disabled in SSH configuration
 - Adding a cronjob to dynamically retrieve the EKS kubeconfig for our EKS cluster
 
-ℹ️ After the initial deployment (which requires at least one instance of this AMI), the AMI will NOT be rebuilt on subsequent terragrunt apply runs; if you want to **force the AMI rebuild**, set the variable `packer_build_ami` to `true` (file `root.hcl` ➜ automatically generated after executing the script `poorman-aws-playground-init.sh`).
+ℹ️ After the initial deployment (which requires at least one instance of this AMI), you can disable the AMI rebuild setting the variable `packer_build_ami` to `false` (file `root.hcl` ➜ automatically generated after executing the script `poorman-aws-playground-init.sh`).
 
 <br>
 
