@@ -12,7 +12,7 @@ resource "helm_release" "karpenter_crd" {
   chart      = "oci://public.ecr.aws/karpenter/karpenter-crd"
   name       = "karpenter-crd"
   namespace  = "kube-system"
-  version    = "1.5.0"
+  version    = "1.5.1"
   depends_on = [aws_iam_service_linked_role.spot[0]]
 }
 
