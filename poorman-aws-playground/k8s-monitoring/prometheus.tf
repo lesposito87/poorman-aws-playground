@@ -17,7 +17,7 @@ resource "helm_release" "prometheus" {
   namespace  = kubernetes_namespace.prometheus.metadata[0].name
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
-  version    = "27.20.1"
+  version    = "27.22.0"
   values = [templatefile("${path.module}/prometheus-values.tpl.yaml",
     {
       prometheus_hostname = aws_route53_record.prometheus.fqdn
