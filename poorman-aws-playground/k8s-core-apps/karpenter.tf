@@ -22,7 +22,7 @@ resource "helm_release" "karpenter" {
   chart     = "oci://public.ecr.aws/karpenter/karpenter"
   name      = "karpenter"
   namespace = "kube-system"
-  version   = "1.5.1"
+  version   = "1.5.2"
 
   values = [templatefile("${path.module}/karpenter-values.tpl.yaml",
     {
