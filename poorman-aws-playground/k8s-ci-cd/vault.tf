@@ -20,7 +20,7 @@ resource "helm_release" "vault" {
   name       = "vault"
   chart      = "vault"
   repository = "https://helm.releases.hashicorp.com"
-  version    = "0.30.0"
+  version    = "0.30.1"
   namespace  = kubernetes_namespace.vault.metadata[0].name
   values = [
     templatefile("vault-values.tpl.yaml", {
