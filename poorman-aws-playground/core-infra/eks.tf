@@ -1,11 +1,11 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.37.1"
+  version = "21.1.5"
 
   count = var.eks_deploy ? 1 : 0
 
   cluster_name    = var.eks_cluster_name
-  cluster_version = "1.32"
+  cluster_version = "1.33"
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = false
