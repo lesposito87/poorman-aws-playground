@@ -126,15 +126,14 @@ module "eks" {
       labels = {
         role = "core"
       }
-      taints = [
-        {
+      taints = {
+        role = {
           key    = "role"
           value  = "core"
           effect = "NO_SCHEDULE"
         }
-      ]
+      }
     }
-
   }
 
   # Cluster access entry
