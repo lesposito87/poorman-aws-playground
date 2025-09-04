@@ -30,7 +30,7 @@ terraform {
     }
     helm = {
       source = "hashicorp/helm"
-      version = "2.17.0"
+      version = "3.0.2"
     }
 %{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
     vault = {
@@ -76,7 +76,7 @@ provider "kubectl" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = "/home/poorman/.kube/config"
     token       = var.eks_deploy ? data.aws_eks_cluster_auth.cluster[0].token : null
   }

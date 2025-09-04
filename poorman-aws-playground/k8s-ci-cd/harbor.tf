@@ -24,8 +24,10 @@ resource "helm_release" "harbor" {
       k8s_nginx_http_host_port = var.k8s_nginx_http_host_port
     })
   ]
-  set_sensitive {
-    name  = "harborAdminPassword"
-    value = var.harbor_admin_pwd
-  }
+  set_sensitive = [ 
+    {
+      name  = "harborAdminPassword"
+      value = var.harbor_admin_pwd
+    }
+  ]
 }
