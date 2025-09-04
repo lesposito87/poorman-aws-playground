@@ -19,10 +19,12 @@ resource "helm_release" "grafana" {
   chart      = "grafana"
   version    = "9.2.7"
 
-  set_sensitive = {
-    name  = "adminPassword"
-    value = var.grafana_admin_pwd
-  }
+  set_sensitive = [
+    {
+      name  = "adminPassword"
+      value = var.grafana_admin_pwd
+    }
+  ]
 
   values = [templatefile("${path.module}/grafana-values.tpl.yaml",
     {
