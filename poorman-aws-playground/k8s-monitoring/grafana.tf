@@ -19,7 +19,7 @@ resource "helm_release" "grafana" {
   chart      = "grafana"
   version    = "9.2.7"
 
-  set_sensitive {
+  set_sensitive = {
     name  = "adminPassword"
     value = var.grafana_admin_pwd
   }
