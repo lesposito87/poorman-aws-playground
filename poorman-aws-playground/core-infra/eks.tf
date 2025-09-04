@@ -1,19 +1,19 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.37.1"
+  version = "21.1.5"
 
   count = var.eks_deploy ? 1 : 0
 
-  cluster_name    = var.eks_cluster_name
-  cluster_version = "1.32"
+  name               = var.eks_cluster_name
+  kubernetes_version = "1.33"
 
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = false
+  endpoint_private_access = true
+  endpoint_public_access  = false
 
   create_kms_key            = false
-  cluster_encryption_config = {}
+  encryption_config = {}
 
-  cluster_addons = {
+  addons = {
     coredns = {
       most_recent       = true
       resolve_conflicts = "OVERWRITE"
@@ -50,7 +50,7 @@ module "eks" {
     "karpenter.sh/discovery" = var.eks_cluster_name
   }
 
-  cluster_security_group_additional_rules = {
+  security_group_additional_rules = {
     ingress_api_access_https_tcp = {
       description = "Allow access to API"
       protocol    = "tcp"
@@ -112,32 +112,28 @@ module "eks" {
   }
 
   # EKS Managed Node Group(s)
-  eks_managed_node_group_defaults = {
-    instance_types             = var.eks_core_instance_type
-    iam_role_attach_cni_policy = true
-  }
-
   eks_managed_node_groups = {
     core = {
       # Change this based on which AZ fck-nat is deployed #
-      subnet_ids      = data.aws_subnets.private_subnets_aza.ids
-      ami_type        = "AL2_ARM_64"
-      min_size        = 1
-      max_size        = 1
-      desired_size    = 1
-      capacity_type   = "ON_DEMAND"
+      subnet_ids                 = data.aws_subnets.private_subnets_aza.ids
+      instance_types             = var.eks_core_instance_type
+      iam_role_attach_cni_policy = true
+      ami_type                   = "AL2_ARM_64"
+      min_size                   = 1
+      max_size                   = 1
+      desired_size               = 1
+      capacity_type              = "ON_DEMAND"
       labels = {
         role = "core"
       }
-      taints = [
-        {
+      taints = {
+        role = {
           key    = "role"
           value  = "core"
           effect = "NO_SCHEDULE"
         }
-      ]
+      }
     }
-
   }
 
   # Cluster access entry
