@@ -173,7 +173,7 @@ This folder contains code that provisions a **VPC** with **Public and Private su
 
 <br>
 
-#### 🚀 FCK-NAT AMI 🚀 <a name="fcknatami"/>
+#### ➡️ FCK-NAT AMI ⬅️ <a name="fcknatami"/>
 
 A custom private AMI built with **Packer**, based on the latest `fck-nat-al2023-*arm64*` public AMI. The main customizations include:
 
@@ -186,7 +186,7 @@ A custom private AMI built with **Packer**, based on the latest `fck-nat-al2023-
 
 <br>
 
-#### 🚀 EC2 Key Pair 🚀
+#### ➡️ EC2 Key Pair ⬅️
 
 A Key Pair used to access the FCK-NAT & K3s EC2 instances, created from the variables `aws_key_pair_private` and `aws_key_pair_public`.
 
@@ -204,7 +204,7 @@ This folder contains code that provisions the following components:
 
 <br>
 
-#### 🚀 FCK-NAT EC2 Instance & OpenVPN Client files 🚀 <a name="fcknatec2"/>
+#### ➡️ FCK-NAT EC2 Instance & OpenVPN Client files ⬅️ <a name="fcknatec2"/>
 
 An On-Demand EC2 instance serving as both a NAT Gateway and an OpenVPN Server. The OpenVPN configuration is managed using the **Ansible** role [ansible-role-openvpn](https://github.com/lesposito87/ansible-role-openvpn).
 
@@ -254,7 +254,7 @@ Additionally, **`kubectl`** is pre-installed and readily available.
 
 <br>
 
-#### 🚀 K3s & Kubeconfig 🚀 <a name="k3s"/>
+#### ➡️ K3s & Kubeconfig ⬅️ <a name="k3s"/>
 
 A privately accessible **K3s cluster** (deployed on a single On-Demand EC2 instance) dedicated to running all the Kubernetes workloads described in the following sections.
 
@@ -271,7 +271,7 @@ A **Kubeconfig** file will be automatically generated after the K3s deployment a
 
 <br>
 
-#### 🚀 EKS Cluster, OpenID Connect (OIDC) Provider & Kubeconfig 🚀 <a name="eks"/>
+#### ➡️ EKS Cluster, OpenID Connect (OIDC) Provider & Kubeconfig ⬅️ <a name="eks"/>
 
 ⚠️ These components will only be deployed if the `eks_deploy` variable is set to `true` (default is `false`). This is because EKS is not cheap at all for a playground environment, so by default, a single-node [K3s](https://k3s.io/) setup is used instead.
 
@@ -357,7 +357,7 @@ This folder contains code that provisions the following components:
 
 <br>
 
-#### 🚀 NGINX Ingress Controller 🚀 <a name="nginxingresscontroller"/>
+#### ➡️ NGINX Ingress Controller ⬅️ <a name="nginxingresscontroller"/>
 
 This setup deploys an NGINX Ingress Controller using a **NodePort** service type, which means that external traffic can reach the ingress controller through a specific port on the Kubernetes nodes (Kubernetes will allocate a port on each node to expose the service).
 
@@ -380,7 +380,7 @@ poorman@24025eaf499f:~$ curl -k -I -L https://k8s-nginx-ingress-controller.myacc
 
 <br>
 
-#### 🚀 Karpenter 🚀 <a name="karpenter"/>
+#### ➡️ Karpenter ⬅️ <a name="karpenter"/>
 
 ⚠️ This component will only be deployed with EKS (`eks_deploy` variable set to `true` - default is `false`).
 
@@ -493,7 +493,7 @@ spec:
 
 <br>
 
-#### 🚀 EBS CSI Driver 🚀 <a name="ebscsidriver"/>
+#### ➡️ EBS CSI Driver ⬅️ <a name="ebscsidriver"/>
 
 ⚠️ This component will only be deployed with EKS (`eks_deploy` variable set to `true` - default is `false`).
 
@@ -514,7 +514,7 @@ This folder contains code that provisions the following components:
 
 <br>
 
-#### 🚀 Metrics Server 🚀 <a name="metricsserver"/>
+#### ➡️ Metrics Server ⬅️ <a name="metricsserver"/>
 
 As outlined in the [Official Documentation](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html), _Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines._
 
@@ -522,7 +522,7 @@ _Metrics Server collects resource metrics from Kubelets and exposes them in Kube
 
 <br>
 
-#### 🚀 Kube-State-Metrics 🚀 <a name="kubestatemetrics"/>
+#### ➡️ Kube-State-Metrics ⬅️ <a name="kubestatemetrics"/>
 
 As outlined in the [Official Documentation](https://github.com/kubernetes/kube-state-metrics?tab=readme-ov-file#overview), _kube-state-metrics (KSM) is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects. It is not focused on the health of the individual Kubernetes components, but rather on the health of the various objects inside, such as deployments, nodes and pods._
 
@@ -530,7 +530,7 @@ _kube-state-metrics is about generating metrics from Kubernetes API objects with
 
 <br>
 
-#### 🚀 Prometheus 🚀 <a name="prometheus"/>
+#### ➡️ Prometheus ⬅️ <a name="prometheus"/>
 
 A single-replica Prometheus Server with a **`4G` Persistent Volume** (values can be customized in the file [prometheus-values.tpl.yaml]())
 
@@ -540,7 +540,7 @@ A **Route53 CNAME Record** `prometheus.<R53-PRIVATE-ZONE>` is automatically crea
 
 <br>
 
-#### 🚀 Grafana 🚀 <a name="grafana"/>
+#### ➡️ Grafana ⬅️ <a name="grafana"/>
 
 A single-replica Grafana Server with a **`4G` Persistent Volume** (values can be customized in the file [grafana-values.tpl.yaml](https://github.com/lesposito87/poorman-aws-playground/blob/main/poorman-aws-playground/k8s-monitoring/grafana-values.tpl.yaml)).
 
@@ -556,7 +556,7 @@ A **Prometheus Datasource** (pointing to our Prometheus instance), **`K8s` Folde
 
 <br>
 
-#### 🚀 Keda 🚀 <a name="keda"/>
+#### ➡️ Keda ⬅️ <a name="keda"/>
 
 As outlined in the [Official Documentation](https://keda.sh/), _KEDA is a **Kubernetes-based Event Driven Autoscaler**. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed._
 
@@ -580,7 +580,7 @@ This folder contains code that provisions the following components:
 
 <br>
 
-#### 🚀 HashiCorp Vault 🚀 <a name="vault"/>
+#### ➡️ HashiCorp Vault ⬅️ <a name="vault"/>
 
 A single-replica Vault Server running in **Standalone mode** with **Filesystem storage backend** (`8G` Persistent Volume) using **AWS KMS for auto-unsealing**.
 
@@ -677,7 +677,7 @@ Here is an high-level diagram illustrating the Vault K8s Authentication (_The or
 
 <br>
 
-#### 🚀 Harbor 🚀 <a name="harbor"/>
+#### ➡️ Harbor ⬅️ <a name="harbor"/>
 
 As outlined in the [Official Website](https://goharbor.io/), _Harbor is an open source registry that secures artifacts with policies and role-based access control_.
 
@@ -705,3 +705,4 @@ To start using the proxy cache, configure your docker pull commands or pod manif
 harbor.<R53-PRIVATE-ZONE>:30080/docker-hub/library/nginx:latest
 harbor.<R53-PRIVATE-ZONE>:30080/docker-hub/goharbor/harbor-core:dev
 ```
+
