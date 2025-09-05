@@ -35,7 +35,7 @@ terraform {
 %{ if basename(path_relative_to_include()) == "k8s-ci-cd" }
     vault = {
       source = "hashicorp/vault"
-      version = "5.0.0"
+      version = "5.2.1"
     }
     harbor = {
       source  = "goharbor/harbor"
