@@ -175,7 +175,7 @@ module "eks" {
 # https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html #
 module "vpc_cni_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.60"
+  version = "~> 6.2"
   
   count = var.eks_deploy ? 1 : 0
 
