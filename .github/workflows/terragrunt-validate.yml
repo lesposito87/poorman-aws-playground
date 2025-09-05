@@ -17,7 +17,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/networking
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
@@ -35,7 +35,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/core-infra
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
@@ -53,7 +53,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/k8s-core-apps
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
@@ -71,7 +71,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/k8s-ci-cd
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
@@ -89,7 +89,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/k8s-monitoring
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
@@ -107,7 +107,7 @@ jobs:
       run:
         working-directory: poorman-aws-playground/organizations
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Copy root.hcl
         run: cp ../../root.hcl.init ../../root.hcl
       - name: Terragrunt Init
