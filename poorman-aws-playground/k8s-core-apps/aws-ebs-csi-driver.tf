@@ -4,12 +4,11 @@ data "http" "aws_ebs_csi_driver_iam_policy" {
 }
 
 module "iam_eks_role_aws_ebs_csi_driver" {
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version   = "5.60.0"
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version   = "6.2.1"
 
   count = var.eks_deploy ? 1 : 0
-
-  role_name = "eks-aws-ebs-csi-driver"
+  name  = "eks-aws-ebs-csi-driver"
 
   oidc_providers = {
     main = {
@@ -23,7 +22,7 @@ resource "aws_iam_role_policy" "eks_aws_ebs_csi_driver" {
   count = var.eks_deploy ? 1 : 0
 
   name   = "eks-aws-ebs-csi-driver"
-  role   = module.iam_eks_role_aws_ebs_csi_driver[0].iam_role_name
+  role   = module.iam_eks_role_aws_ebs_csi_driver[0].name
   policy = data.http.aws_ebs_csi_driver_iam_policy[0].response_body
 }
 
@@ -38,7 +37,7 @@ resource "helm_release" "aws_ebs_csi_driver_controller" {
 
   values = [
     templatefile("${path.module}/aws-ebs-csi-driver-values.tpl.yaml", {
-      role_arn   = module.iam_eks_role_aws_ebs_csi_driver[0].iam_role_arn
+      role_arn   = module.iam_eks_role_aws_ebs_csi_driver[0].name
       cluster_id = var.eks_cluster_name
     })
   ]

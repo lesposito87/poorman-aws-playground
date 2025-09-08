@@ -26,7 +26,7 @@ resource "helm_release" "karpenter" {
 
   values = [templatefile("${path.module}/karpenter-values.tpl.yaml",
     {
-      iam_role_arn = module.iam_eks_role_karpenter_controller[0].iam_role_arn
+      iam_role_arn = module.iam_eks_role_karpenter_controller[0].arn
       cluster_name = var.eks_cluster_name
     }
   )]
