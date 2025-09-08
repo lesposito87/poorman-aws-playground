@@ -54,7 +54,7 @@ resource "aws_iam_role_policy_attachment" "amazon-ssm-managed-instance-core" {
 module "iam_eks_role_karpenter_controller" {
   count    = var.eks_deploy ? 1 : 0
   source   = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version  = "5.60.0"
+  version  = "6.2.1"
   role_name = "karpenter-controller"
 
   oidc_providers = {
