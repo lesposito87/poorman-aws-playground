@@ -1,8 +1,8 @@
 module "iam_eks_role_keda" {
   count     = var.eks_deploy ? 1 : 0
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
   version   = "5.60.0"
-  role_name = "keda-operator"
+  name      = "keda-operator"
 
   oidc_providers = {
     main = {

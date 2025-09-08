@@ -53,9 +53,9 @@ resource "aws_iam_role_policy_attachment" "amazon-ssm-managed-instance-core" {
 
 module "iam_eks_role_karpenter_controller" {
   count    = var.eks_deploy ? 1 : 0
-  source   = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version  = "5.60.0"
-  role_name = "karpenter-controller"
+  source   = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version  = "6.2.1"
+  name     = "karpenter-controller"
 
   oidc_providers = {
     main = {
@@ -69,7 +69,7 @@ resource "aws_iam_role_policy" "karpenter_controller" {
   count = var.eks_deploy ? 1 : 0
 
   name = "karpenter-controller"
-  role = module.iam_eks_role_karpenter_controller[0].iam_role_name
+  role = module.iam_eks_role_karpenter_controller[0].name
   policy = jsonencode({
     "Statement" : [
       {

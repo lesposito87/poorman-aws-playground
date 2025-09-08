@@ -38,7 +38,7 @@ module "eks" {
     vpc-cni = {
       most_recent              = true
       resolve_conflicts        = "OVERWRITE"
-      service_account_role_arn = module.vpc_cni_irsa[0].iam_role_arn
+      service_account_role_arn = module.vpc_cni_irsa[0].arn
     }
   }
 
@@ -174,12 +174,13 @@ module "eks" {
 
 # https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html #
 module "vpc_cni_irsa" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.60"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version = "6.2.1"
   
   count = var.eks_deploy ? 1 : 0
 
-  role_name_prefix      = "VPC-CNI-IRSA"
+  name                  = "VPC-CNI-IRSA"
+  use_name_prefix       = true
   attach_vpc_cni_policy = true
   vpc_cni_enable_ipv4   = true
 
