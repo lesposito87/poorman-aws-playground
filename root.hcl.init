@@ -45,7 +45,7 @@ terraform {
 %{ if basename(path_relative_to_include()) == "k8s-monitoring" }
     grafana = {
       source = "grafana/grafana"
-      version = "4.5.3"
+      version = "4.6.0"
     }
 %{ endif }
   }
