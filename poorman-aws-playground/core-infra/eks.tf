@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.1.5"
+  version = "21.2.0"
 
   count = var.eks_deploy ? 1 : 0
 
