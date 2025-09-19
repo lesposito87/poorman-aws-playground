@@ -39,7 +39,7 @@ terraform {
     }
     harbor = {
       source  = "goharbor/harbor"
-      version = "3.11.0"
+      version = "3.11.2"
     }
 %{ endif }
 %{ if basename(path_relative_to_include()) == "k8s-monitoring" }
