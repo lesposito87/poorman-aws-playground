@@ -17,7 +17,7 @@ resource "helm_release" "grafana" {
   namespace  = kubernetes_namespace.grafana.metadata[0].name
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
-  version    = "10.0.0"
+  version    = "10.1.4"
 
   set_sensitive = [
     {
