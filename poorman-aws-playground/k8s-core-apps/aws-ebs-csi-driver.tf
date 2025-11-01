@@ -33,7 +33,7 @@ resource "helm_release" "aws_ebs_csi_driver_controller" {
   chart      = "aws-ebs-csi-driver"
   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
   namespace  = "kube-system"
-  version    = "2.48.0"
+  version    = "2.52.1"
 
   values = [
     templatefile("${path.module}/aws-ebs-csi-driver-values.tpl.yaml", {
